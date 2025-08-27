@@ -1,0 +1,20 @@
+    warning = [
+        tool_name = Enforcer
+        tool_version = 0.1.0
+        tool_url = https://bitbucket.org/AliasAPI/enforcer
+
+        rule_id = ENFORCER_001
+        rule_name = ONE_FUNC_PER_FILE 
+        short_description = Only allow one function per file
+        full_description = There are too many functions in the file
+        severity_level = critical
+        start_line = 0
+        end_line = 0
+        start_column = 0
+        end_column = 0
+        artifact_url = file:// + train[file_path]
+        help_url = https://bitbucket.org/AliasAPI/microscanner/rules/TT001.md
+        message = There should only be one function per file 
+        prompt = Chunk the code so that there is only one top-level function in the file
+    ]
+

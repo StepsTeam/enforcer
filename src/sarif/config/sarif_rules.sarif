@@ -1,0 +1,125 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "sarif",
+          "version": "0.0.1",
+          "informationUri": "https://bitbucket.org/AliasAPI/enforcer",
+          "rules": [
+            {
+              "id": "SAR001",
+              "name": "SARIF_MISSING_APP_LOGS_DIR",
+              "shortDescription": { "text": "Missing application logs directory" },
+              "fullDescription": { "text": "train[app_logs_dir] was not set before SARIF logging." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Set train[app_logs_dir] to the folder for SARIF output." }
+            },
+            {
+              "id": "SAR002",
+              "name": "SARIF_DIR_CREATE_FAILED",
+              "shortDescription": { "text": "Unable to create SARIF output directory" },
+              "fullDescription": { "text": "Failed to create the directory where SARIF output should be saved." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Verify write permissions for the target directory." }
+            },
+            {
+              "id": "SAR003",
+              "name": "SARIF_MISSING_RESULTS",
+              "shortDescription": { "text": "No SARIF results to log" },
+              "fullDescription": { "text": "train[sarif] was empty or missing when writing SARIF to disk." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure train[sarif] contains analysis results before logging." }
+            },
+            {
+              "id": "SAR004",
+              "name": "SARIF_FILE_CREATE_FAILED",
+              "shortDescription": { "text": "Failed to create SARIF output file" },
+              "fullDescription": { "text": "An error occurred while creating the SARIF file on disk." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure app_logs_dir is valid and writable." }
+            },
+            {
+              "id": "SAR005",
+              "name": "SARIF_JSON_SERIALIZE_FAILED",
+              "shortDescription": { "text": "SARIF JSON serialization failed" },
+              "fullDescription": { "text": "Could not convert SARIF document to proper JSON format." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Check SARIF data structure for invalid types." }
+            },
+            {
+              "id": "SAR006",
+              "name": "SARIF_FILE_WRITE_FAILED",
+              "shortDescription": { "text": "Failed to write SARIF to disk" },
+              "fullDescription": { "text": "SARIF file was created but could not be written to." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure sufficient disk space and write permissions." }
+            },
+            {
+              "id": "SAR007",
+              "name": "SARIF_INVALID_ERROR_OBJECT",
+              "shortDescription": { "text": "Invalid error object in train[flaws]" },
+              "fullDescription": { "text": "Found a non-object entry in train[flaws]." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Replace with a fully-formed SARIF-compliant object." }
+            },
+            {
+              "id": "SAR008",
+              "name": "SARIF_MISSING_FILE_PATH",
+              "shortDescription": { "text": "Missing file_path in train" },
+              "fullDescription": { "text": "train[file_path] was missing during validation." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "train[file_path] must be set before validating flaws." }
+            },
+            {
+              "id": "SAR009",
+              "name": "SARIF_MISSING_FIELD",
+              "shortDescription": { "text": "Missing required field in flaw object" },
+              "fullDescription": { "text": "A required field is missing from an error object in train." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure all required fields are filled in before processing." }
+            },
+            {
+              "id": "SAR010",
+              "name": "SARIF_TOOL_NAME_NOT_SET",
+              "shortDescription": { "text": "train[tool][tool_name] not set" },
+              "fullDescription": { "text": "Each tool must set train[tool][tool_name] before calling set_sarif_settings()." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Set train[tool][tool_name] to the current tool name." }
+            },
+            {
+              "id": "SAR011",
+              "name": "SARIF_RULES_CONSTANT_NOT_SET",
+              "shortDescription": { "text": "SARIF rules constant not set in train" },
+              "fullDescription": { "text": "train[tool][tool_rules_constant] must be set to the tool's SARIF JSON." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Set train[tool][tool_rules_constant] to the include_str! constant." }
+            },
+            {
+              "id": "SAR012",
+              "name": "SARIF_RULES_INVALID_JSON",
+              "shortDescription": { "text": "SARIF JSON is invalid" },
+              "fullDescription": { "text": "The SARIF constant could not be parsed as valid JSON." },
+              "helpUri": "",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure the SARIF constant is valid JSON." }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

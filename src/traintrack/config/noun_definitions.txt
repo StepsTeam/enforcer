@@ -1,0 +1,52 @@
+adapter:      A component that allows incompatible interfaces to work together
+address:      A location identifier in memory or storage
+archive:      A compressed or bundled collection of files
+argument:     A value passed to a function or method
+artifact:     A generated file or object from a build process
+attribute:    A property or characteristic of an element or object
+bit:          The smallest unit of data in computing
+block:        A grouped set of statements or instructions
+byte:         A unit of digital information typically consisting of 8 bits
+command:      An instruction for a computer to perform an action
+component:    A reusable and modular part of a system
+constant:     A value that does not change during program execution
+cursor:       A position indicator for navigating data or UI
+dataset:      A structured collection of related data
+event:        An occurrence that can trigger program behavior
+frame:        A single unit in a sequence, often in graphics or networking
+gateway:      A network point that acts as an entrance to another network
+graph:        A structure consisting of nodes and edges
+heap:         A memory area for dynamic allocation
+index:        A numerical or key-based reference to data
+iterator:     An object that enables sequential access to elements
+message:      A communication unit between processes or systems
+method:       A function associated with an object or class
+module:       A self-contained unit of code or functionality
+namespace:    A container for identifiers to avoid naming conflicts
+node:         A fundamental unit in a data structure such as a tree or graph
+opcode:       The portion of a machine language instruction specifying the operation
+package:      A bundle of related modules or classes
+path:         A string that specifies the location of a file or directory
+pipeline:     A sequence of processing stages for data
+port:         A communication endpoint for network connections
+profile:      A set of user or system settings
+queue:        A data structure where elements are processed in FIFO order
+range:        A span between two values, often numeric or positional
+region:       A defined area in memory or storage
+registry:     A system for storing configuration data
+repository:   A storage location for code, data, or artifacts
+response:     Data sent back after a request is processed
+row:          A horizontal grouping of data in a table or dataset
+schema:       A structured definition of data organization
+service:      A program or function that performs operations for other programs
+signal:       A notification or event sent between components
+socket:       An endpoint for sending or receiving data over a network
+span:         A contiguous block of memory or sequence
+stream:       A continuous flow of data elements over time
+table:        A structured arrangement of data in rows and columns
+tag:          A marker or label for identification or categorization
+transaction:  A sequence of operations performed as a single logical unit
+type:         A classification that defines possible values and operations
+unit:         A discrete, testable piece of code or data
+view:         A representation of data or UI layout
+workspace:    A collection of files and configurations for a project

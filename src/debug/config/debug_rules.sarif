@@ -1,0 +1,62 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "debug",
+          "version": "0.1.0",
+          "informationUri": "https://bitbucket.org/AliasAPI/enforcer",
+          "rules": [
+            {
+              "id": "DBG001",
+              "name": "DEBUG_TOOL_NAME_NOT_SET",
+              "shortDescription": { "text": "Tool name not set in debug context" },
+              "fullDescription": { "text": "The 'train[tool][tool_name]' field was not set or was invalid when a debug rule lookup was attempted." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/DBG001.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure 'train[tool][tool_name]' is set to the current tool's name before calling debug functions that require it." }
+            },
+            {
+              "id": "DBG002",
+              "name": "DEBUG_RULE_NAME_NOT_SET",
+              "shortDescription": { "text": "Rule name not specified for debug warning/wreck" },
+              "fullDescription": { "text": "A 'rule_name' was not provided in either the 'train[warn]' or 'train[wreck]' context when attempting to get SARIF rule details." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/DBG002.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Set 'train[warn][rule_name]' or 'train[wreck][rule_name]' before calling 'get_tool_sarif_rules'." }
+            },
+            {
+              "id": "DBG003",
+              "name": "DEBUG_INVALID_WATCH_LEVEL",
+              "shortDescription": { "text": "Invalid debug watch level" },
+              "fullDescription": { "text": "A debug 'watch' entry was attempted with a level outside the valid range (1-12) or was not a number." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/DBG003.md",
+              "defaultConfiguration": { "level": "note" },
+              "properties": { "prompt": "Set 'train[watch][level]' to an integer between 1 and 12." }
+            },
+            {
+              "id": "DBG004",
+              "name": "DEBUG_MALFORMED_WARN_ENTRY",
+              "shortDescription": { "text": "Malformed 'warn' entry in train" },
+              "fullDescription": { "text": "The 'train[warn]' object was missing required fields or was not an object when processing a warning." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/DBG004.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure 'train[warn]' is a valid JSON object with at least a 'rule_name'." }
+            },
+            {
+              "id": "DBG005",
+              "name": "DEBUG_MALFORMED_WRECK_ENTRY",
+              "shortDescription": { "text": "Malformed 'wreck' entry in train" },
+              "fullDescription": { "text": "The 'train[wreck]' object was missing required fields or was not an object when processing a critical error." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/DBG005.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure 'train[wreck]' is a valid JSON object with at least a 'rule_name'." }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "tree_sitter",
+          "version": "0.1.0",
+          "informationUri": "https://bitbucket.org/AliasAPI/enforcer",
+          "rules": [
+            {
+              "id": "TS001",
+              "name": "TREE_SITTER_PARSE_TREE_NOT_FOUND",
+              "shortDescription": { "text": "Parse tree was not found" },
+              "fullDescription": { "text": "The parsing tree was missing from the pipeline at extraction time." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS001.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS002",
+              "name": "TREE_SITTER_NO_LANGUAGE_DETECTED",
+              "shortDescription": { "text": "No language detected" },
+              "fullDescription": { "text": "No programming language was detected in the source code." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS002.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS003",
+              "name": "TREE_SITTER_NO_LANGUAGE_GRAMMARS_AVAILABLE",
+              "shortDescription": { "text": "Language grammars missing" },
+              "fullDescription": { "text": "No grammar files available for the detected language." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS003.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS004",
+              "name": "TREE_SITTER_LANGUAGE_GRAMMAR_NOT_FOUND",
+              "shortDescription": { "text": "Language grammar file not found" },
+              "fullDescription": { "text": "Matching grammar file for the detected language was not found." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS004.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS005",
+              "name": "TREE_SITTER_LANGUAGE_ALREADY_SET",
+              "shortDescription": { "text": "Language already loaded" },
+              "fullDescription": { "text": "The Tree-sitter language was already loaded and cannot be set twice." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS005.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS006",
+              "name": "TREE_SITTER_FAILED_TO_FIND_LANGUAGE_SYMBOL",
+              "shortDescription": { "text": "Failed to locate language symbol" },
+              "fullDescription": { "text": "Could not locate the language symbol in the dynamic library." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS006.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS007",
+              "name": "TREE_SITTER_FAILED_TO_LOAD_GRAMMAR_FILE",
+              "shortDescription": { "text": "Grammar file load failure" },
+              "fullDescription": { "text": "Loading the grammar dynamic library failed." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS007.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS008",
+              "name": "TREE_SITTER_DYNAMIC_LOADING_NOT_SUPPORTED",
+              "shortDescription": { "text": "Dynamic loading unsupported" },
+              "fullDescription": { "text": "Dynamic loading of grammar files is not supported on this platform." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS008.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS009",
+              "name": "TREE_SITTER_NO_LANGUAGE_GRAMMARS_DIR",
+              "shortDescription": { "text": "Language grammars directory missing" },
+              "fullDescription": { "text": "The directory containing language grammars was not set or found." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS009.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS010",
+              "name": "TREE_SITTER_LANGUAGE_GRAMMARS_DIR_MISSING",
+              "shortDescription": { "text": "Language grammars directory missing" },
+              "fullDescription": { "text": "The language grammars directory does not exist." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS010.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS011",
+              "name": "TREE_SITTER_FAILED_TO_READ_LANGUAGE_GRAMMARS_DIR",
+              "shortDescription": { "text": "Failed to read language grammars directory" },
+              "fullDescription": { "text": "Error reading contents of language grammars directory." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS011.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS012",
+              "name": "TREE_SITTER_NO_FILE_PATH",
+              "shortDescription": { "text": "Source file path missing" },
+              "fullDescription": { "text": "No source file path was set in the pipeline." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS012.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS013",
+              "name": "TREE_SITTER_FAILED_TO_READ_SOURCE",
+              "shortDescription": { "text": "Failed to read source code" },
+              "fullDescription": { "text": "Unable to read source code from the file path." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS013.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS014",
+              "name": "TREE_SITTER_LANGUAGE_NOT_LOADED",
+              "shortDescription": { "text": "Language not loaded" },
+              "fullDescription": { "text": "The Tree-sitter language parser was not loaded before parsing." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS014.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS015",
+              "name": "TREE_SITTER_SOURCE_CODE_NOT_LOADED",
+              "shortDescription": { "text": "Source code not loaded" },
+              "fullDescription": { "text": "Source code was not loaded before parsing." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS015.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS016",
+              "name": "TREE_SITTER_SOURCE_CODE_EMPTY",
+              "shortDescription": { "text": "Empty source code" },
+              "fullDescription": { "text": "Source code was empty when attempting to parse." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS016.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS017",
+              "name": "TREE_SITTER_FAILED_TO_SET_LANGUAGE",
+              "shortDescription": { "text": "Failed to set language" },
+              "fullDescription": { "text": "Parser failed to set the Tree-sitter language." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS017.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS018",
+              "name": "TREE_SITTER_FAILED_TO_PARSE_SOURCE_CODE",
+              "shortDescription": { "text": "Failed to parse source code" },
+              "fullDescription": { "text": "Parsing the source code with Tree-sitter failed." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS018.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            },
+            {
+              "id": "TS019",
+              "name": "TREE_SITTER_PARSE_TREE_ALREADY_SET",
+              "shortDescription": { "text": "Parse tree already set" },
+              "fullDescription": { "text": "Attempted to set the parse tree more than once." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TS019.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "severity": "error" }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

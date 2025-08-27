@@ -1,0 +1,43 @@
+How the Enforcer Debugging Works
+
+watch[]
+    train[watch][level] = 3
+    train[watch][message] = configure_cli:
+    train = watch[train]
+
+    level: integer; set so that the watch[] messages can be filtered
+    message: string; Dynamically set in functions for debugging logs
+    watch[]: array: updates the train[log] array
+
+warn[]
+    train[warn][rule_name] = TOOL_RULE_NAME
+    train[warn][message] = Dynamically set message
+
+    rule_name: string; Starts with the tool/folder name
+                       a key set in config/<tool>_rules.sarif
+    message: string; Optionally set to overwrite the default prompt
+    warn[] is used to aggregate SARIF warning messages from SAST tools
+
+wreck[]
+    train[wreck][rule_name] = TOOL_RULE_NAME
+    train[wreck][message] = Dynamically set message
+
+    rule_name: string; Starts with the tool/folder name
+                       a key set in config/<tool>_rules.sarif
+                       sarif module uses it to look up details
+    message: string; Optionally set to overwrite the default prompt 
+    wreck[] is only called in the Enforcer project's business logic
+
+get_tool_sarif_rules[]
+    if train[tool][tool_name] is not set, rule_name = DEBUG_TOOL_NAME_NOT_SET
+        Sets SARIF details based on debug/config/debug_rules.sarif for wreck[]
+        return wreck[train]
+
+    Sets rule_name if train[warn][rule_name] is set
+    Resets rule_name if train[wreck][rule_name] is set
+    if rule_name is not set, rule_name = DEBUG_RULE_NAME_NOT_SET
+        Sets SARIF details based on debug/config/debug_rules.sarif for wreck[]
+        return wreck[train]
+
+    Reads from <TOOL>_SARIF_RULES that has been compiled into a costant
+ 

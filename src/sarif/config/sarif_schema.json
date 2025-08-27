@@ -1,0 +1,153 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Clippy",
+          "version": "1.72.0",
+          "informationUri": "https://github.com/rust-lang/rust-clippy",
+          "rules": [
+            {
+              "id": "clippy::unwrap_used",
+              "name": "unwrap_used",
+              "shortDescription": { "text": "Avoid using unwrap() on Option or Result." },
+              "fullDescription": {
+                "text": "Using unwrap may cause panics if the value is None or Err. Consider using pattern matching or expect with a meaningful message."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "clippy::unwrap_used",
+          "level": "warning",
+          "message": {
+            "text": "Used unwrap() on Option, which may panic if None."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///project/src/lib.rs"
+                },
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 18,
+                  "endLine": 42,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "prompt": "Refactor this line to safely handle the Option without using unwrap(). Use pattern matching or `.expect()` with a meaningful message."
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "ShellCheck",
+          "version": "0.9.0",
+          "informationUri": "https://www.shellcheck.net/",
+          "rules": [
+            {
+              "id": "SC2086",
+              "name": "SC2086",
+              "shortDescription": { "text": "Double quote to prevent globbing and word splitting." },
+              "fullDescription": {
+                "text": "Word splitting and globbing can result in bugs or unexpected behavior. Use double quotes around variable expansions."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "SC2086",
+          "level": "error",
+          "message": {
+            "text": "Double quote to prevent globbing and word splitting."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///scripts/deploy.sh"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 13,
+                  "endLine": 12,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "prompt": "Modify the variable expansion to be quoted: change `$VAR` to `\"$VAR\"` to avoid globbing and word splitting."
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "ESLint",
+          "version": "8.51.0",
+          "informationUri": "https://eslint.org",
+          "rules": [
+            {
+              "id": "no-unused-vars",
+              "name": "no-unused-vars",
+              "shortDescription": { "text": "Disallow unused variables." },
+              "fullDescription": {
+                "text": "Variables that are declared but never used anywhere in the code can be removed."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "no-unused-vars",
+          "level": "warning",
+          "message": {
+            "text": "'foo' is defined but never used."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///webapp/app.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 7,
+                  "endLine": 8,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "prompt": "Remove the variable `foo` if it's unused, or add logic that uses it to satisfy the linter rule."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "traintrack",
+          "version": "0.1.0",
+          "informationUri": "https://bitbucket.org/AliasAPI/enforcer",
+          "rules": [
+            {
+              "id": "TT001",
+              "name": "TT_ONE_FUNCTION_PER_FILE",
+              "shortDescription": { "text": "Only allow one top-level function per file." },
+              "fullDescription": { "text": "Chunk the code so that there is only one top-level function per file." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT001.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Chunk the code so that there is only one top-level function in the file." }
+            },
+            {
+              "id": "TT002",
+              "name": "TT_NO_TOP_LEVEL_FUNCTION_FOUND",
+              "shortDescription": { "text": "No top-level function was found in the file." },
+              "fullDescription": { "text": "Every source file should contain exactly one top-level function. This file does not contain any." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT002.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure the file contains exactly one top-level function." }
+            },
+            {
+              "id": "TT003",
+              "name": "TT_TRAIN_FUNCTION_INPUT",
+              "shortDescription": { "text": "All functions must use the train parameter." },
+              "fullDescription": { "text": "Write the function so that it only uses the train parameter." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT003.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Rewrite the function so that it uses the train input parameter." }
+            },
+            {
+              "id": "TT004",
+              "name": "TT_MULTIPLE_FUNCTION_INPUTS",
+              "shortDescription": { "text": "Only allow one train function input parameter." },
+              "fullDescription": { "text": "" },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT004.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Rewrite the function so that it only uses the train input parameter." }
+            },
+            {
+              "id": "TT005",
+              "name": "TT_TRAIN_ARRAY",
+              "shortDescription": { "text": "The train input parameter must be a struct." },
+              "fullDescription": { "text": "Make sure the train input parameter is a mutable struct (array)" },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT005.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Rewrite the function to make sure the train input parameter is an array" }
+            },
+            {
+              "id": "TT006",
+              "name": "TT_NO_SOURCE_CODE_NODES",
+              "shortDescription": { "text": "Enforcer does not have SOURCE_CODE_NODES set." },
+              "fullDescription": { "text": "Make sure Enforcer sets SOURCE_CODE NODES in extract_source_code_nodes" },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT006.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Sets SOURCE_CODE NODES in the extract_source_code_nodes[] function" }
+            },
+            {
+              "id": "TT007",
+              "name": "TT_NO_TRAIN_SIZE_LIMIT_CODE",
+              "shortDescription": { "text": "Add code to limit the size of the train parameter." },
+              "fullDescription": { "text": "Add code to limit the size of the train parameter." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT007.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Add code to limit the size of the train parameter." }
+            },
+            {
+              "id": "TT008",
+              "name": "TT_TRAIN_TOO_BIG",
+              "shortDescription": { "text": "The train input parameter contains too much data." },
+              "fullDescription": { "text": "Make sure the train array remains small enough to prevent issues." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT008.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Unset unused train parameters within each track_ file to keep the train array a manageable size." }
+            },
+            {
+              "id": "TT009",
+              "name": "TT_AVOID_ELSEIF_ELSE",
+              "shortDescription": { "text": "Always exit early; Avoid elif, elseif, elif, and else statements." },
+              "fullDescription": { "text": "Always exit early; Avoid elif, elseif, elif, and else statements." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT009.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Always exit early; Avoid elif, elseif, elif, and else statements." }
+            },
+            {
+              "id": "TT010",
+              "name": "TT_AVOID_CASE_SWITCHES",
+              "shortDescription": { "text": "Always exit early; Avoid case switches." },
+              "fullDescription": { "text": "Always exit early; Avoid case switches." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT010.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Always exit early; Avoid case switches" }
+            },
+            {
+              "id": "TT011",
+              "name": "TT_RETURN_TRAIN_ARRAY",
+              "shortDescription": { "text": "All functions must always return the train array." },
+              "fullDescription": { "text": "Make sure the function always returns the train array." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT011.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Edit the function so that it always only returns the train array." }
+            },
+            {
+              "id": "TT012",
+              "name": "TT_MULTIPLE_OUTPUTS",
+              "shortDescription": { "text": "Functions can only output the train array." },
+              "fullDescription": { "text": "Make sure the function only returns the train array." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT012.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Edit the function so that ONLY returns the train array and no other outputs." }
+            },
+            {
+              "id": "TT013",
+              "name": "TT_PARSE_TREE_NOT_FOUND",
+              "shortDescription": { "text": "Enforcer does not have PARSE_TREE set." },
+              "fullDescription": { "text": "Make sure Enforcer sets PARSE_TREE in parse_source_code[]. If this rule is triggered, the Tree-sitter parsing pipeline might have failed earlier or PARSE_TREE was not properly set by `parse_source_code`." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT013.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Set PARSE_TREE in the parse_source_code[] function." }
+            },
+            {
+              "id": "TT014",
+              "name": "TT_FUNCTION_NAME_MATCHES_FILE_NAME",
+              "shortDescription": { "text": "Function name must match the file name." },
+              "fullDescription": { "text": "Function name must match the file name (without the file extension). This helps ensure a clear 1:1 mapping between file and its primary function." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT014.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Make sure the function name matches the file name without the file extension." }
+            },
+            {
+              "id": "TT015",
+              "name": "TT_FUNCTION_NAME_STARTS_WITH_VERB",
+              "shortDescription": { "text": "Function name must start with a verb prefix (set_, check_, create_, etc.)." },
+              "fullDescription": { "text": "Start the function name with a verb like 'set_', 'check_', or 'create_'. This improves readability and indicates the function's action." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT015.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Start the function name with a verb like set_, check_, or create_." }
+            },
+            {
+              "id": "TT016",
+              "name": "TT_FUNCTION_NAME_DOES NOT_END_WITH_NOUN",
+              "shortDescription": { "text": "Function name must end with a noun (subject) like name, address." },
+              "fullDescription": { "text": "End the function name with a noun (subject) like 'name', 'address', etc. This clearly indicates what the function acts upon." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT016.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "End the function name with a noun (subject) like name, address." }
+            },
+            {
+              "id": "TT017",
+              "name": "TT_ONE_WORD_FUNCTION_MUST_BE_VERB",
+              "shortDescription": { "text": "One-word function names must be known verbs." },
+              "fullDescription": { "text": "If a function name has only one word, it must be a recognized verb from train[tool][function_verbs]. This ensures brevity does not compromise clarity." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT017.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Rename the function to be a recognized verb if it is only one word." }
+            },
+            {
+              "id": "TT018",
+              "name": "TT_FUNCTION_SECOND_WORD_SHOULD_BE_ADJECTIVE",
+              "shortDescription": { "text": "Second word of function name should be an adjective." },
+              "fullDescription": { "text": "For three-part names (verb_adjective_noun), the second word must be from train[tool][function_adjectives]. This provides descriptive context." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT018.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Edit the function name so that the second word is a valid adjective." }
+            },
+            {
+              "id": "TT019",
+              "name": "TT_FUNCTION_LAST_WORD_SHOULD_BE_NOUN",
+              "shortDescription": { "text": "Last word of function name should be a noun." },
+              "fullDescription": { "text": "The final part of the function name should be a recognized noun from train[tool][function_nouns]. This specifies the object of the function's action." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT019.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Edit the function name so that the last word is a valid noun." }
+            },
+            {
+              "id": "TT020",
+              "name": "TT_FUNCTION_MUST_BE_SNAKE_CASE",
+              "shortDescription": { "text": "Function names must be snake_case unless camelCase is mandatory." },
+              "fullDescription": { "text": "Function names should use snake_case. CamelCase is only allowed if train[tool][force_camel_case] is true (for languages where camelCase is standard). Ensures consistent casing." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT020.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Rename the function to snake_case unless camelCase is required for the language." }
+            },
+            {
+              "id": "TT021",
+              "name": "TT_FUNCTION_NESTING_LIMIT_EXCEEDED",
+              "shortDescription": { "text": "Function nesting depth exceeds the allowed limit." },
+              "fullDescription": { "text": "This rule flags functions where the depth of nested structures (e.g., control flow, blocks) within the function's body exceeds the configured 'nesting_limit'. Deeply nested functions can be hard to read, understand, and maintain." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT021.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Refactor the function to reduce its nesting depth. Consider breaking it into smaller, more focused functions." }
+            },
+            {
+              "id": "TT_FUNCTION_NAME_NOT_EXTRACTED",
+              "name": "TT_FUNCTION_NAME_NOT_EXTRACTED",
+              "shortDescription": { "text": "The function name could not be extracted from the AST node." },
+              "fullDescription": { "text": "The Tree-sitter node representing the function did not contain an identifiable name node (e.g., an identifier child). This indicates an issue with parsing or AST structure for this function." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT_FUNCTION_NAME_NOT_EXTRACTED.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Review the Tree-sitter grammar and extraction logic for function names." }
+            },
+            {
+              "id": "TT_MISSING_TOOL_DATA",
+              "name": "TT_MISSING_TOOL_DATA",
+              "shortDescription": { "text": "Required tool configuration data (e.g., naming lists) is missing from the train object." },
+              "fullDescription": { "text": "The 'tool' object in the train (or specific naming convention lists like verbs/nouns) were not found, preventing comprehensive analysis. This often means the `configure_traintrack` or related setup functions did not run or failed to populate these critical data points." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT_MISSING_TOOL_DATA.md",
+              "defaultConfiguration": { "level": "error" },
+              "properties": { "prompt": "Ensure the 'configure_traintrack' function correctly populates 'train[\\\"tool\\\"]' with all necessary data." }
+            },
+            {
+              "id": "TT_FUNCTION_NAME_WORD_COUNT",
+              "name": "TT_FUNCTION_NAME_WORD_COUNT",
+              "shortDescription": { "text": "Function name has an unexpected number of words based on conventions." },
+              "fullDescription": { "text": "Function names are expected to follow 1-word (verb), 2-word (verb_noun), or 3-word (verb_adjective_noun) patterns. This rule flags deviations from these expected lengths." },
+              "helpUri": "https://bitbucket.org/AliasAPI/enforcer/rules/TT_FUNCTION_NAME_WORD_COUNT.md",
+              "defaultConfiguration": { "level": "warning" },
+              "properties": { "prompt": "Adjust the function name to adhere to the standard word count conventions (1, 2, or 3 words)." }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

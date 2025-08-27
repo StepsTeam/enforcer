@@ -1,0 +1,27 @@
+    # Set in each configure_tool[] 
+    train[warn][tool_name] = tool 
+    train[warn][tool_version] = 0.1.0
+    train[warn][tool_url] = https://bitbucket.org/User/tool
+    train[warn][tool_rules] = TOOL_SARIF_RULES 
+
+    # Set in TOOL_SARIF_RULES
+    train[warn][rule_id] = TOOL_001
+    train[warn][rule_name] = ONE_FUNC_PER_FILE 
+    train[warn][short_description] = Only allow one function per file
+    train[warn][full_description] = There are too many functions in the file
+    train[warn][severity_level] = critical
+    train[warn][help_url] = https://bitbucket.org/User/tool/rules/TT001.md
+
+    # Set dynamically at runtime
+    train[warn][artifact_url] = file:// + train[file_path]
+    train[warn][start_line] = 0
+    train[warn][end_line] = 10
+    train[warn][start_column] = 10
+    train[warn][end_column] = 70
+
+    # Set in TOOL_SARIF_RULES
+    train[warn][message] = There should only be one function per file 
+    train[warn][prompt] = Chunk the code so that there is only one top-level function in the file
+
+
+ 

@@ -1,0 +1,62 @@
+add:         Append new data to a collection or accumulator
+analyze:     Examine data deeply to extract meaning
+append:      Add data to the end of a sequence
+assert:      Enforce a condition and fail if unmet
+audit:       Log and review data for compliance or changes
+cache:       Temporarily store data for faster access
+calculate:   Perform mathematical operations and update data
+cancel:      Stop a scheduled or running task
+check:       Perform validations and sanitizations on data
+configure:   Set up and validate configuration parameters
+convert:     Change data format or type
+create:      Create new records or resources
+decode:      Transform data to a human-readable format
+delete:      Remove records or resources
+detect:      Identify patterns, anomalies, or specific conditions
+dispatch:    Send tasks or messages for handling
+encode:      Convert data to a machine-readable format
+estimate:    Approximate a value or cost
+execute:     Run a defined sequence of actions
+fetch:       Retrieve data from a remote or local source
+filter:      Select data items matching specific criteria
+format:      Prepare data for display or export
+get:         Retrieve a stored value; fail if not found
+group:       Categorize data into subgroups
+inspect:     Examine structure or state of data
+launch:      Start a new process or task
+listen:      Wait for incoming events or data
+load:        Read data from persistent storage
+log:         Write structured event messages
+map:         Transform each item in a collection
+merge:       Combine multiple datasets or collections
+normalize:   Standardize data structure or format
+notify:      Send an alert or message
+pause:       Temporarily halt execution
+predict:     Forecast outcomes based on data patterns
+print:       Output text or information
+prompt:      Request input from the user
+purge:       Permanently remove data
+query:       Retrieve data with custom filters or conditions
+read:        Retrieve or read data from a data source
+reduce:      Aggregate items into a single value
+respond:     Reply to a request or event
+resume:      Continue execution after a pause
+run:         Execute code, libraries, or processes
+sanitize:    Clean data to remove unwanted or dangerous content
+save:        Write data to persistent storage
+schedule:    Arrange for delayed or planned execution
+set:         Validate, sanitize, and store values
+simulate:    Model a scenario without actual execution
+sort:        Arrange data according to a defined order
+split:       Break data into parts or segments
+store:       Persist data in memory or on disk
+sync:        Synchronize state between systems or data sets
+tag:         Assign or replace tags in data or strings
+test:        Run validation routines or tests on data or code
+track:       Monitor or sequence chained calls or actions
+update:      Modify existing records or data
+validate:    Ensure data meets required criteria
+verify:      Confirm correctness, authenticity, or validity
+warn:        A function that sets debugging warning message 
+watch:       A function that sets a comment in train[log]
+wreck:       A function that sets a warning and train[wreck]

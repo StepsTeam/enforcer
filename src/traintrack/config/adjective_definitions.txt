@@ -1,0 +1,62 @@
+active:       Currently running or in use
+asynchronous: Executing independently without waiting for other tasks
+available:    Ready for use or access
+binary:       Represented in base-2 numerical format
+cached:       Stored for quick retrieval
+clean:        Free from errors, unnecessary data, or side effects
+compiled:     Translated from source code into machine code
+compressed:   Reduced in size for storage or transmission
+concurrent:   Executing multiple tasks in overlapping time periods
+configured:   Set up with the necessary parameters or settings
+connected:    Linked or joined to another system or network
+constant:     Unchanging once defined
+current:      Relating to the present point in time
+custom:       User-defined or tailored for a specific purpose
+default:      Predefined when no alternative is specified
+deprecated:   Marked as outdated and discouraged for use
+dirty:        Modified but not yet saved or committed
+distributed:  Spread across multiple systems or locations
+dynamic:      Able to change at runtime
+enabled:      Activated and available for use
+encrypted:    Converted into a secure, unreadable form
+ephemeral:    Short-lived and temporary
+exclusive:    Restricted to a single entity or process
+expected:     Anticipated under normal operation
+expired:      No longer valid or usable
+external:     Located outside the current system or scope
+faulty:       Containing errors or malfunctioning
+global:       Accessible throughout an entire program or system
+idle:         Inactive but available for work
+immutable:    Cannot be changed after creation
+internal:     Restricted to the current scope or system
+invalid:      Not meeting required rules or standards
+locked:       Restricted from access or modification
+local:        Pertaining to a specific scope or location
+manual:       Initiated or controlled by human action
+maximum:      The highest possible or allowed value
+minimum:      The lowest possible or allowed value
+missing:      Absent or not found
+offline:      Not connected to a network or service
+online:       Connected to and interacting with a network
+optional:     Not required for normal operation
+parallel:     Occurring simultaneously with other tasks
+pending:      Awaiting completion or action
+primary:      Main or most important
+readable:     Able to be accessed for reading
+remote:       Located at a different physical or logical location
+running:      Actively executing
+secondary:    Supporting or subordinate
+secure:       Protected against unauthorized access
+serial:       Executed one step at a time in sequence
+shared:       Accessible by multiple entities
+signed:       Authenticated or marked with a signature
+stale:        Outdated or no longer current
+static:       Fixed and not changing during execution
+temporary:    Existing for a limited period
+trusted:      Considered safe and reliable
+unique:       One of a kind and not duplicated
+unlocked:     Open for modification or access
+unsaved:      Modified but not yet persisted
+valid:        Meeting required rules or standards
+volatile:     Likely to change unpredictably
+writable:     Able to be modified or written to

@@ -1,0 +1,6 @@
+
+file_path
+data_files_dir
+app_logs_dir
+
+file_content > Constant somewhere?

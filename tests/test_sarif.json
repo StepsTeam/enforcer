@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Enforcer",
+          "rules": [
+            {
+              "id": "ENF001",
+              "name": "ExampleRule",
+              "shortDescription": {
+                "text": "This is an example SARIF rule."
+              },
+              "fullDescription": {
+                "text": "This rule serves as a placeholder for testing the SARIF rule generation in the build script."
+              },
+              "helpUri": "https://enforcer.example.com/rules/ENF001"
+            }
+          ]
+        }
+      },
+      "results": []
+    }
+  ]
+}

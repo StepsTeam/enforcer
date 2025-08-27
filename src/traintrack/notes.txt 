@@ -1,0 +1,17 @@
+Should I use this or pure early exit?
+
+compound condition or logical conjunction in programming terms.
+
+In shell scripting specifically, it’s sometimes referred to as:
+
+Combining conditions
+
+Logical AND / OR in an if
+
+Compound if statement
+
+Short-circuit evaluation (because && and || stop evaluating once the truth value is determined)
+
+
+
+No comments in track_ files
