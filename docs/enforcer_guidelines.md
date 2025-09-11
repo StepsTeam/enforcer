@@ -42,4 +42,4 @@ WHEN:
 WHO:
 . MicroManager runs a Enforcer uPlan to develop all code
 
-
+Ask questions you have or reply, "I understand Enforcer"

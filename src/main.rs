@@ -1,39 +1,32 @@
-// src/main.rs
-use clap::Parser;
+// /opt/enforcer/src/main.rs
 
-// Removed: pub use SARIF_RULES; // This was causing a conflict
-
-mod cli;
-mod oewl;
+mod debug;
 mod sarif;
-mod state;
+mod tree_sitter;
 mod traintrack;
-mod tree_sitter_utils; // Renamed to tree_sitter_utils to avoid conflict with tree_sitter crate
+mod state;
 
-// Add a test module -- this is ignored when not running tests.
-#[cfg(test)]
-mod tests;
+use crate::sarif::configure_sarif::configure_sarif;
+use crate::sarif::log_sarif_json::log_sarif_json;
+use crate::tree_sitter::track_tree_sitter::track_tree_sitter;
+use crate::traintrack::track_traintrack::track_traintrack;
+use crate::state::Train;
 
 fn main() {
-    let mut train = state::Train::new();
+    // Initialize Train
+    let train = Train::new();
 
-    // Track CLI arguments and apply to train
-    train = cli::track_cli(train);
+    // Run SARIF configuration
+    let train = configure_sarif(train);
 
-    // Acquire OEWL rules
-    oewl::acquire_oewl(&mut train);
+    // Run Tree-sitter analysis
+    let train = track_tree_sitter(train);
 
-    // Configure SARIF reporting
-    sarif::configure_sarif(&mut train);
+    // Run TrainTrack enforcement
+    let train = track_traintrack(train);
 
-    // Track Tree-sitter details
-    tree_sitter_utils::track_tree_sitter(&mut train);
+    // Log SARIF JSON
+    let train = log_sarif_json(train);
 
-    // Track Traintrack specific rules
-    traintrack::track_traintrack(&mut train);
-
-    // After all checks, log the SARIF report
-    sarif::log_sarif_json(&mut train);
-
-    println!("Final Train State: {:?}", train);
+    println!("Pipeline finished. Train: {:?}", train);
 }

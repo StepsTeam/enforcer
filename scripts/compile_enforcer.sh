@@ -9,6 +9,10 @@ function compile_enforcer {
         exit 1
     }
 
+    # Ignore the files in /opt/enforcer/target/ and vendor/ directories
+    # tree -I 'target|vendor' /opt/enforcer > docs/directory_structure.txt
+    tree -I 'target' /opt/enforcer > docs/directory_structure.txt
+
     cargo clean
 
     cargo build --verbose

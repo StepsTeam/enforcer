@@ -1,16 +1,16 @@
-use crate::state::Train;
-use crate::debug::watch::watch;
-use serde_json::Value; 
+// src/sarif/append_train_sarif.rs
 
-/// Append all valid SARIF-like error objects in train[flaws] to train[sarif]
-/// Removes duplicate train[flaws] to make the SARIF JSON output more concise
-/// Removes train[flaws] finally to help maintain the size of the train array
+use crate::state::{Train, Warn};
+use crate::debug::watch;
+
+/// Appends SARIF results to train.results, ensuring no duplicates, and logs actions via watch.
 pub fn append_train_sarif(mut train: Train) -> Train {
+    // Initial watch log
     train.watch.level = 3;
-    train.watch.message = "append_train_sarif:".to_string();
+    train.watch.message = "append_train_sarif: start".to_string();
     train = watch(train);
 
-    // Read from train.sarif_rules (which is of type Value)
+    // Extract results from SARIF rules
     let results_opt = train
         .sarif_rules
         .get("runs")
@@ -21,33 +21,35 @@ pub fn append_train_sarif(mut train: Train) -> Train {
         .cloned();
 
     if let Some(results) = results_opt {
-        // This part assumes 'results' is a direct field on 'Train'
-        // If not, it needs to be added to src/state.rs
-        if !train.results.is_array() { // Assumes train.results exists and is a Value
-            train.results = serde_json::json!([]); // Initialize if not an array
+        // Ensure train.results is an array
+        if !train.results.is_array() {
+            train.results = serde_json::json!([]);
         }
 
-        let train_results = train
-            .results
-            .as_array_mut()
-            .expect("train.results must be an array");
+        let train_results = train.results.as_array_mut().unwrap();
 
         for error in results {
-            if !train_results.iter().any(|existing| {
-                existing.get("message")
-                    == error
-                        .get("message")
-                        .and_then(|m| m.as_str())
-                        .map(|s| Value::String(s.to_string()))
-                        .as_ref()
-            }) {
-                train_results.push(error.clone());
+            if let Some(error_message) = error.get("message").and_then(|m| m.as_str()) {
+                let duplicate = train_results.iter().any(|existing| {
+                    existing.get("message").and_then(|m| m.as_str()) == Some(error_message)
+                });
+
+                if !duplicate {
+                    train_results.push(error);
+                }
             }
         }
     }
 
+    // Clear warnings by assigning a default Warn struct
+    train.warn = Warn {
+        level: 0,
+        rule_name: "".to_string(),
+        message: "".to_string(),
+    };
+
     train.watch.level = 5;
-    train.watch.message = "SARIF results appended to train.".to_string();
+    train.watch.message = "SARIF results appended and warnings cleared.".to_string();
     train = watch(train);
 
     train

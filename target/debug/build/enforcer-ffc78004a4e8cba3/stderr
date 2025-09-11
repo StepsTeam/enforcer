@@ -1,0 +1,10 @@
+cargo:warning=Missing 'crate_name' in language config. Skipping.
+cargo:warning=Missing 'crate_name' in language config. Skipping.
+cargo:warning=Missing 'crate_name' in language config. Skipping.
+cargo:warning=Missing 'crate_name' in language config. Skipping.
+cargo:warning=Missing 'crate_name' in language config. Skipping.
+cargo:warning=Missing 'crate_name' for compilation. Skipping bash.
+cargo:warning=Missing 'crate_name' for compilation. Skipping json.
+cargo:warning=Missing 'crate_name' for compilation. Skipping php.
+cargo:warning=Missing 'crate_name' for compilation. Skipping rust.
+cargo:warning=Missing 'crate_name' for compilation. Skipping yaml.

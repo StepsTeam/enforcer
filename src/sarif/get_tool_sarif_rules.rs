@@ -1,12 +1,28 @@
-use serde_json::{Value, json};
-use crate::SARIF_RULES;
+// FUNCTION: get_tool_sarif_rules
+use serde_json::json;
 use crate::state::Train;
+use std::collections::HashMap;
 
-pub fn get_tool_sarif_rules(tool_name: &str) -> Option<Value> {
-    let tool_rules = SARIF_RULES.get(tool_name);
-    
-    match tool_rules {
-        Some(rules_value) => Some(json!({ "rules": [rules_value] })),
-        None => None,
-    }
+static SARIF_RULES: once_cell::sync::Lazy<HashMap<&'static str, Vec<&'static str>>> = 
+    once_cell::sync::Lazy::new(|| {
+        let mut m = HashMap::new();
+        m.insert("cli", vec!["rule1", "rule2"]);
+        m.insert("enforcer", vec!["ruleA", "ruleB"]);
+        m
+    });
+
+pub fn get_tool_sarif_rules(mut train: Train) -> Train {
+    let tool_name = &train.tool.tool_name;
+
+    let rules_value = match SARIF_RULES.get(tool_name.as_str()) {
+        Some(rules) => rules,
+        None => {
+            train.wreck.message = format!("SARIF rules not found for tool '{}'", tool_name);
+            return train;
+        }
+    };
+
+    train.sarif_rules = json!({ "rules": rules_value.clone() });
+
+    train
 }

@@ -2,7 +2,7 @@
 
 ## Core Philosophy
 
-The **TrainTrack architecture** prioritizes **clear communication to non-programmers and LLMs** above all else. Every design decision serves this fundamental goal of making code readable, understandable, and maintainable by humans and AI systems alike.
+The **TrainTrack architecture** prioritizes **clear communication to non-programmers and LLMs** above all else. Every design decision serves this fundamental goal of making code readable, understandable, and maintainable by humans and LLM systems alike.
 
 ---
 
@@ -15,10 +15,9 @@ The **TrainTrack architecture** prioritizes **clear communication to non-program
 - **MUST**: Each function is in its own file and the filename matches the function name  
 
 ```
-station verb_adjective_noun[train] {
+station verb_adjective_noun[train]
     // Process train
     return train
-}
 ```
 
 ### Function Naming Convention
@@ -47,35 +46,30 @@ The style allows humans to read the sequential functions to understand the code.
 
 ```
 // ✅ CORRECT - Early exit pattern
-function validate_data(train) {
-    if (!train.data) {
-        train.error = "No data found"
+function validate_data[train]
+    if [!train.data]
+        train.error = No data found
         return train
-    }
     
-    if (train.data.length == 0) {
-        train.error = "Empty data set"
+    if [train.data.length == 0]
+        train.error = Empty data set
         return train
-    }
     
     // Process valid data
     train.processed = true
     return train
-}
 
 // ❌ INCORRECT - Nested conditions
-function validate_data(train) {
-    if (train.data) {
-        if (train.data.length > 0) {
+function validate_data[train]
+    if [train.data]
+        if [train.data.length > 0]
             train.processed = true
-        } else {
-            train.error = "Empty data set"
-        }
-    } else {
-        train.error = "No data found"
-    }
+          else 
+            train.error = Empty data set
+      else 
+        train.error = No data found
+    
     return train
-}
 ```
 
 ### Language Agnostic Code
@@ -91,18 +85,16 @@ function validate_data(train) {
 
 ```
 // ✅ CORRECT - Clear variable names
-function process_user_data(train) {
+function process_user_data[train]
     user_count = train.users.length
     current_user = train.users[user_index]
     return train
-}
 
 // ❌ INCORRECT - Cryptic variables
-function process_user_data(train) {
+function process_user_data[train]
     n = train.users.length
     u = train.users[i]
     return train
-}
 ```
 
 ---
@@ -218,13 +210,12 @@ tool/
 - **SHOULD**: Folders should have a track file that calls the folder function in order  
 
 ```
-function track_tool[train] {
+function track_tool[train]
     train = acquire_tool[train]
     train = configure_tool[train]
     train = download_tool_artifacts[train]
     train = execute_tool[train]
     return train
-}
 ```
 
 ---
@@ -238,11 +229,10 @@ function track_tool[train] {
 - **MUST**: Include fuzzy tests for unexpected inputs  
 
 ```
-function test_validate_user_input() {
+function test_validate_user_input[]
     // Unit test - normal case
     // Mutation test - invalid data
     // Fuzzy test - random inputs
-}
 ```
 
 ---
@@ -290,4 +280,8 @@ For every TrainTrack function, verify:
 ---
 
 *Remember: Every decision in TrainTrack serves the goal of clear communication to humans and AI systems. When in doubt, choose the more explicit, readable option.*
+
+1. Remember the rules in this TrainTrack Architecture Style Guide 
+2. Return "I understand TrainTrack" and we will begin programming
+
 ```

@@ -1,0 +1,3 @@
+cargo:rerun-if-changed="/opt/enforcer/src/sarif/tests/test_sarif.json"
+cargo:rerun-if-changed="/opt/enforcer/src/tree_sitter/config/language_configurations.json"
+cargo:warning=Build process completed successfully.

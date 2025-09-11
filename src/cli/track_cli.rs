@@ -1,4 +1,4 @@
-use crate::state::Train;
+use crate::state::{Train};
 
 use crate::sarif::set_sarif_settings::set_sarif_settings;
 use crate::cli::configure_cli::configure_cli;

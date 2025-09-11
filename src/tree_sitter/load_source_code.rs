@@ -1,8 +1,7 @@
 use once_cell::sync::OnceCell;
 use std::fs;
-use crate::state::Train; // Corrected: Use Train struct instead of serde_json::Value
-use crate::debug::watch::watch; // Explicitly import watch function
-use crate::debug::wreck::wreck; // Explicitly import wreck function
+use crate::state::{Train}; // Corrected: Use Train struct instead of serde_json::Value
+use crate::debug::{watch, wreck};
 
 /// Global buffer for the loaded source code content.
 pub static SOURCE_CODE: OnceCell<String> = OnceCell::new();

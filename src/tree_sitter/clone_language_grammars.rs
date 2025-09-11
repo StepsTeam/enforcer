@@ -4,9 +4,7 @@ use serde_json::Value;
 use std::process::Command;
 
 use crate::state::{Train, Warn};
-use crate::debug::watch::watch;
-use crate::debug::wreck::wreck;
-
+use crate::debug::{watch, warn, wreck, configure_debug};
 /// Clones Tree-sitter language grammars based on the configuration stored in `train.language_configurations`.
 /// The grammars are cloned into the directory specified by `train.vendor_dir`.
 /// This function now takes and returns only the `Train` struct.

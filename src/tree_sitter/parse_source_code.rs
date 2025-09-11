@@ -1,113 +1,148 @@
-use crate::debug::watch::watch;
-use crate::debug::wreck::wreck;
 use crate::state::{Train, Warn};
-use crate::tree_sitter::load_source_code::SOURCE_CODE;
+use crate::debug::{watch, wreck};
+use crate::tree_sitter::detect_language::TREE_SITTER_LANGUAGE_STORE;
+use tree_sitter::{Language, Parser, Tree};
+use std::fs;
+use std::path::Path;
 use once_cell::sync::OnceCell;
-use tree_sitter::{Parser, Tree, Language};
+use std::sync::Mutex;
 
-pub static PARSE_TREE: OnceCell<Tree> = OnceCell::new();
+/// Global store for the last parsed Tree-sitter tree
+pub static PARSE_TREE: OnceCell<Mutex<Tree>> = OnceCell::new();
 
-// Declare external C functions for tree-sitter grammars
-// ONLY FOR THE LIMITED SET: Bash, JSON, PHP, Rust, YAML
-extern "C" {
-    fn tree_sitter_bash() -> Language;
-    fn tree_sitter_json() -> Language; // Added JSON
-    fn tree_sitter_php() -> Language;  // Added PHP
-    fn tree_sitter_rust() -> Language;
-    fn tree_sitter_yaml() -> Language; // Added YAML
-}
-
+/// Parses the source code of the file in `train.file_path` using Tree-sitter.
+/// Dynamically loads the grammar based on `train.tool.params["language_name"]`.
 pub fn parse_source_code(mut train: Train) -> Train {
+    // Early exit if train already has a wreck
     if !train.wreck.message.is_empty() {
         return train;
     }
 
     train.watch.level = 3;
-    train.watch.message = "parse_source_code:".to_string();
+    train.watch.message = "parse_source_code: start".to_string();
     train = watch(train);
 
-    // Clone the language name from the train.tool struct
-    let language_name_from_train = train.tool.language_name.clone();
-
-    // Dynamically get an OWNED Language object based on the detected name
-    let owned_language_instance: Language = match language_name_from_train.as_str() {
-        "bash" => unsafe { tree_sitter_bash() },
-        "json" => unsafe { tree_sitter_json() }, // Use the JSON language
-        "php" => unsafe { tree_sitter_php() },   // Use the PHP language
-        "rust" => unsafe { tree_sitter_rust() },
-        "yaml" => unsafe { tree_sitter_yaml() }, // Use the YAML language
-        _ => {
-            train.warn_message = Some(Warn {
-                rule_name: "TREE_SITTER_UNKNOWN_LANGUAGE".to_string(),
-                message: format!("Unknown or unsupported language: '{}'. Cannot parse source code.", language_name_from_train),
-            });
-            return wreck(train);
-        }
-    };
-
-    // Use a reference to the owned Language instance for .name()
-    let current_language_name = (&owned_language_instance).name().to_string();
-
-    let source_code = match SOURCE_CODE.get() {
-        Some(code) => code,
+    let file_path = match &train.file_path {
+        Some(p) => p,
         None => {
-            train.warn_message = Some(Warn {
-                rule_name: "TREE_SITTER_SOURCE_CODE_NOT_LOADED".to_string(),
-                message: "Source code is not loaded. Ensure load_source_code was successful.".to_string(),
-            });
+            train.warn = Warn {
+                level: 2,
+                rule_name: "FILE_PATH_MISSING".to_string(),
+                message: "No file path provided for parsing.".to_string(),
+            };
             return wreck(train);
         }
     };
 
-    if source_code.trim().is_empty() {
-        train.warn_message = Some(Warn {
-            rule_name: "TREE_SITTER_SOURCE_CODE_EMPTY".to_string(),
-            message: "Source code is empty or only whitespace. Cannot parse.".to_string(),
-        });
-        return wreck(train);
-    }
+    let source_code = match fs::read_to_string(file_path) {
+        Ok(code) => code,
+        Err(_) => {
+            train.warn = Warn {
+                level: 2,
+                rule_name: "FILE_READ_ERROR".to_string(),
+                message: format!("Failed to read file {:?}", file_path),
+            };
+            return wreck(train);
+        }
+    };
 
-    let mut parser = Parser::new();
-
-    // Move the OWNED Language instance into set_language.
-    // 'owned_language_instance' is consumed here.
-    if parser.set_language(owned_language_instance).is_err() {
-        train.warn_message = Some(Warn {
-            rule_name: "TREE_SITTER_FAILED_TO_SET_LANGUAGE".to_string(),
-            message: format!("Failed to set Tree-sitter language '{}' on parser.", current_language_name),
-        });
-        return wreck(train);
-    }
-
-    let tree = match parser.parse(source_code, None) {
-        Some(t) => t,
+    let language_name = match train
+        .tool
+        .params
+        .get("language_name")
+        .and_then(|v| v.as_str())
+    {
+        Some(name) => name,
         None => {
-            train.warn_message = Some(Warn {
-                rule_name: "TREE_SITTER_FAILED_TO_PARSE_SOURCE_CODE".to_string(),
-                message: format!("Failed to parse source code for language '{}'.", current_language_name),
-            });
+            train.warn = Warn {
+                level: 2,
+                rule_name: "LANGUAGE_NOT_DETECTED".to_string(),
+                message: "Language name not set in train.tool.params".to_string(),
+            };
             return wreck(train);
         }
     };
 
-    if PARSE_TREE.set(tree.clone()).is_err() {
-        train.warn_message = Some(Warn {
-            rule_name: "TREE_SITTER_PARSE_TREE_ALREADY_SET".to_string(),
-            message: "Parse tree was already set. This indicates a logic error in the pipeline.".to_string(),
-        });
-        return wreck(train);
-    }
-
-    eprintln!("cargo:warning=Symbolic Expression: {}", tree.root_node().to_sexp());
-
-    train.watch.level = 5;
-    train.watch.message = format!(
-        "Parsed source code for language '{}', root node '{}', {} child nodes",
-        current_language_name,
-        tree.root_node().kind(),
-        tree.root_node().child_count()
+    // Build the path to the compiled grammar
+    let lib_path = format!(
+        "{}/compiled_grammars/{}_language.so",
+        env!("CARGO_MANIFEST_DIR"),
+        language_name
     );
 
-    train = watch(train);
-    train
+    if !Path::new(&lib_path).exists() {
+        train.warn = Warn {
+            level: 2,
+            rule_name: "LANGUAGE_LIB_NOT_FOUND".to_string(),
+            message: format!("Compiled grammar not found for {} at {}", language_name, lib_path),
+        };
+        return wreck(train);
+    }
+
+    // Dynamically load grammar
+    let language: Language = unsafe {
+        let lib = match libloading::Library::new(&lib_path) {
+            Ok(l) => l,
+            Err(_) => {
+                train.warn = Warn {
+                    level: 2,
+                    rule_name: "LANGUAGE_LIB_LOAD_FAILED".to_string(),
+                    message: format!("Failed to load library {}", lib_path),
+                };
+                return wreck(train);
+            }
+        };
+        let symbol: libloading::Symbol<unsafe extern "C" fn() -> Language> =
+            match lib.get(b"tree_sitter_language") {
+                Ok(s) => s,
+                Err(_) => {
+                    train.warn = Warn {
+                        level: 2,
+                        rule_name: "LANGUAGE_LIB_LOAD_FAILED".to_string(),
+                        message: format!("Failed to load symbol from {}", lib_path),
+                    };
+                    return wreck(train);
+                }
+            };
+        symbol()
+    };
+
+    let _ = TREE_SITTER_LANGUAGE_STORE.set(language);
+
+    let mut parser = Parser::new();
+    if parser.set_language(language).is_err() {
+        train.warn = Warn {
+            level: 2,
+            rule_name: "PARSER_LANGUAGE_ERROR".to_string(),
+            message: format!("Failed to set parser language for {}", language_name),
+        };
+        return wreck(train);
+    }
+
+    match parser.parse(&source_code, None) {
+        Some(tree) if tree.root_node().named_child_count() > 0 => {
+            // Store parsed tree globally
+            let _ = PARSE_TREE.set(Mutex::new(tree.clone()));
+
+            train.watch.level = 5;
+            train.watch.message = format!("Successfully parsed source as {}", language_name);
+            watch(train)
+        }
+        Some(_) => {
+            train.warn = Warn {
+                level: 2,
+                rule_name: "PARSE_EMPTY_TREE".to_string(),
+                message: format!("Parsing produced empty tree for {}", language_name),
+            };
+            wreck(train)
+        }
+        None => {
+            train.warn = Warn {
+                level: 2,
+                rule_name: "PARSER_FAILED".to_string(),
+                message: format!("Failed to parse file {:?}", file_path),
+            };
+            wreck(train)
+        }
+    }
 }

@@ -1,0 +1,1 @@
+Add a rule to stop the LLM from wasting tokens and time by giving extra output

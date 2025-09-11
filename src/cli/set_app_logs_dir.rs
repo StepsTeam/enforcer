@@ -1,8 +1,6 @@
-use crate::state::Train;
+use crate::state::{Train};
 use std::path::Path;
-use crate::debug::watch::watch;
-use crate::debug::wreck::wreck;
-
+use crate::debug::{watch, warn, wreck, configure_debug};
 pub fn set_app_logs_dir(mut train: Train) -> Train {
     if !train.wreck.message.is_empty() {
         return train;

@@ -1,7 +1,5 @@
-use crate::state::Train;
-use crate::debug::watch::watch;
-use crate::debug::wreck::wreck;
-
+use crate::state::{Train};
+use crate::debug::{watch, warn, wreck, configure_debug};
 const CLI_SARIF_RULES: &str = include_str!("config/cli_rules.sarif");
 
 pub fn configure_cli(mut train: Train) -> Train {

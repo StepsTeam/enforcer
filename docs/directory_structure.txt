@@ -1,0 +1,1331 @@
+/opt/enforcer
+├── build_helpers
+│   ├── collect_naming_words.rs
+│   ├── collect_sarif_rules.rs
+│   ├── create_directory_tree.rs
+│   ├── create_naming_words_arrays.rs
+│   ├── finalize_build.rs
+│   ├── generate_build_constants.rs
+│   ├── mod.rs
+│   ├── set_config_paths.rs
+│   └── set_sarif_rules_constant.rs
+├── build.rs
+├── Cargo.lock
+├── Cargo.toml
+├── docs
+│   ├── directory_structure.txt
+│   ├── enforcer_architecture.md
+│   ├── enforcer_guidelines.md
+│   ├── microscanner_overview.md
+│   ├── microscanner_parameters.md
+│   ├── microscanner_tool_standards.md
+│   ├── microscanner_why.md
+│   └── uplan_product_management.tt
+├── Enforcer.uplan.md
+├── README.md
+├── scripts
+│   ├── acquire_cargo.sh
+│   ├── compile_enforcer.sh
+│   └── sync_tree_sitter_configurations.sh
+├── src
+│   ├── cli
+│   │   ├── config
+│   │   │   └── cli_rules.sarif
+│   │   ├── configure_cli.rs
+│   │   ├── inputs.txt
+│   │   ├── mod.rs
+│   │   ├── set_app_logs_dir.rs
+│   │   ├── set_data_files_dir.rs
+│   │   ├── set_file_path.rs
+│   │   └── track_cli.rs
+│   ├── debug
+│   │   ├── config
+│   │   │   ├── debug_module_prompt.txt
+│   │   │   ├── debug_rules.sarif
+│   │   │   └── flaw_example.txt
+│   │   ├── configure_debug.rs
+│   │   ├── mod.rs
+│   │   ├── warn.rs
+│   │   ├── watch.rs
+│   │   └── wreck.rs
+│   ├── main.rs
+│   ├── sarif
+│   │   ├── append_train_sarif.rs
+│   │   ├── config
+│   │   │   ├── flaw_example.txt
+│   │   │   ├── rules.json
+│   │   │   ├── sarif_rules.sarif
+│   │   │   └── sarif_schema.json
+│   │   ├── configure_sarif.rs
+│   │   ├── get_tool_sarif_rules.rs
+│   │   ├── log_sarif_json.rs
+│   │   ├── mod.rs
+│   │   ├── reset_train_warnings.rs
+│   │   ├── set_sarif_settings.rs
+│   │   ├── tests
+│   │   │   ├── run_tests.rs
+│   │   │   ├── test_sarif.json
+│   │   │   └── test_simple_sarif.rs
+│   │   └── track_sarif.rs
+│   ├── state.rs
+│   ├── traintrack
+│   │   ├── check_function_nesting_limit.rs
+│   │   ├── check_one_function_per_file.rs
+│   │   ├── check_train_function_input.rs
+│   │   ├── check_train_function_output.rs
+│   │   ├── check_train_size_limit.rs
+│   │   ├── check_unwanted_output.txt
+│   │   ├── config
+│   │   │   ├── adjective_definitions.txt
+│   │   │   ├── naming_words.txt
+│   │   │   ├── noun_definitions.txt
+│   │   │   ├── pair_programming_prompt.txt
+│   │   │   ├── traintrack_cheatsheet.md
+│   │   │   ├── traintrack_rules.sarif
+│   │   │   ├── traintrack_style_guide.md
+│   │   │   ├── traintrack.toml
+│   │   │   └── verb_definitions.txt
+│   │   ├── configure_traintrack.rs
+│   │   ├── mod.rs
+│   │   ├── notes.txt 
+│   │   └── track_traintrack.rs
+│   ├── tree
+│   │   └── acquire_tree_rust_cli.rs
+│   └── tree_sitter
+│       ├── add_languages_to_cargo.rs
+│       ├── clone_language_grammars.rs
+│       ├── config
+│       │   ├── language_configurations.json
+│       │   └── tree_sitter_rules.sarif
+│       ├── configure_tree_sitter.rs
+│       ├── detect_language.rs
+│       ├── extract_source_code_nodes.rs
+│       ├── load_source_code.rs
+│       ├── mod.rs
+│       ├── parse_source_code.rs
+│       ├── README.md
+│       ├── tests
+│       │   └── test_tree_sitter_rules_file.rs
+│       └── track_tree_sitter.rs
+└── vendor
+    ├── tree-sitter-bash
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree_sitter
+    │   │   │   │   └── tree-sitter-bash.h
+    │   │   │   └── tree-sitter-bash.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_bash
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterBash
+    │   │       │   └── bash.h
+    │   │       └── TreeSitterBashTests
+    │   │           └── TreeSitterBashTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── atom.sh
+    │   │   ├── clean-old.sh
+    │   │   ├── doc-build.sh
+    │   │   ├── install.sh
+    │   │   ├── release.sh
+    │   │   ├── relocate.sh
+    │   │   ├── test.sh
+    │   │   └── update-authors.sh
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   └── highlights.scm
+    │   ├── README.md
+    │   ├── script
+    │   │   ├── known-failures.txt
+    │   │   └── parse-examples
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   └── corpus
+    │   │       ├── commands.txt
+    │   │       ├── crlf.txt
+    │   │       ├── literals.txt
+    │   │       ├── programs.txt
+    │   │       └── statements.txt
+    │   └── tree-sitter.json
+    ├── tree-sitter-c
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree_sitter
+    │   │   │   │   └── tree-sitter-c.h
+    │   │   │   └── tree-sitter-c.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_c
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterC
+    │   │       │   └── c.h
+    │   │       └── TreeSitterCTests
+    │   │           └── TreeSitterCTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── cluster.c
+    │   │   ├── malloc.c
+    │   │   └── parser.c
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── ambiguities.txt
+    │   │   │   ├── crlf.txt
+    │   │   │   ├── declarations.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── microsoft.txt
+    │   │   │   ├── preprocessor.txt
+    │   │   │   ├── statements.txt
+    │   │   │   └── types.txt
+    │   │   └── highlight
+    │   │       ├── keywords.c
+    │   │       └── names.c
+    │   └── tree-sitter.json
+    ├── tree-sitter-cpp
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-cpp.h
+    │   │   │   └── tree-sitter-cpp.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_cpp
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterCPP
+    │   │       │   └── cpp.h
+    │   │       └── TreeSitterCPPTests
+    │   │           └── TreeSitterCPPTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── marker-index.h
+    │   │   └── rule.cc
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── injections.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── ambiguities.txt
+    │   │   │   ├── c
+    │   │   │   │   ├── ambiguities.txt
+    │   │   │   │   ├── crlf.txt
+    │   │   │   │   ├── declarations.txt
+    │   │   │   │   ├── expressions.txt
+    │   │   │   │   ├── microsoft.txt
+    │   │   │   │   ├── preprocessor.txt
+    │   │   │   │   ├── statements.txt
+    │   │   │   │   └── types.txt
+    │   │   │   ├── concepts.txt
+    │   │   │   ├── declarations.txt
+    │   │   │   ├── definitions.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── microsoft.txt
+    │   │   │   ├── modules.txt
+    │   │   │   ├── statements.txt
+    │   │   │   └── types.txt
+    │   │   └── highlight
+    │   │       ├── keywords.cpp
+    │   │       └── names.cpp
+    │   └── tree-sitter.json
+    ├── tree-sitter-c-sharp
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-c-sharp.h
+    │   │   │   └── tree-sitter-c-sharp.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_c_sharp
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterCSharp
+    │   │       │   └── c-sharp.h
+    │   │       └── TreeSitterCSharpTests
+    │   │           └── TreeSitterCSharpTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── attributes.txt
+    │   │   │   ├── classes.txt
+    │   │   │   ├── contextual-keywords.txt
+    │   │   │   ├── enums.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── identifiers.txt
+    │   │   │   ├── interfaces.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── preprocessor.txt
+    │   │   │   ├── query-syntax.txt
+    │   │   │   ├── records.txt
+    │   │   │   ├── source-file-structure.txt
+    │   │   │   ├── statements.txt
+    │   │   │   ├── structs.txt
+    │   │   │   ├── type-events.txt
+    │   │   │   ├── type-fields.txt
+    │   │   │   ├── type-methods.txt
+    │   │   │   ├── type-operators.txt
+    │   │   │   └── type-properties.txt
+    │   │   ├── highlight
+    │   │   │   ├── baseline.cs
+    │   │   │   ├── operators.cs
+    │   │   │   ├── types.cs
+    │   │   │   ├── var.cs
+    │   │   │   └── variableDeclarations.cs
+    │   │   └── queries
+    │   │       └── identifiers.cs
+    │   ├── tools
+    │   │   └── highlight-test-generator
+    │   │       ├── Generator.cs
+    │   │       ├── Generator.csproj
+    │   │       └── run-generator
+    │   └── tree-sitter.json
+    ├── tree-sitter-go
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-go.h
+    │   │   │   └── tree-sitter-go.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_go
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterGo
+    │   │       │   └── go.h
+    │   │       └── TreeSitterGoTests
+    │   │           └── TreeSitterGoTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── letter_test.go
+    │   │   ├── no_newline_at_eof.go
+    │   │   ├── proc.go
+    │   │   └── value.go
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   └── corpus
+    │   │       ├── declarations.txt
+    │   │       ├── expressions.txt
+    │   │       ├── literals.txt
+    │   │       ├── source_files.txt
+    │   │       ├── statements.txt
+    │   │       └── types.txt
+    │   └── tree-sitter.json
+    ├── tree-sitter-haskell
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-haskell.h
+    │   │   │   └── tree-sitter-haskell.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_haskell
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterHaskell
+    │   │       │   └── haskell.h
+    │   │       └── TreeSitterHaskellTests
+    │   │           └── TreeSitterHaskellTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── examples
+    │   │   └── Basic.hs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar
+    │   │   ├── class.js
+    │   │   ├── conflicts.js
+    │   │   ├── context.js
+    │   │   ├── data.js
+    │   │   ├── decl.js
+    │   │   ├── exp.js
+    │   │   ├── externals.js
+    │   │   ├── general.js
+    │   │   ├── id.js
+    │   │   ├── inline.js
+    │   │   ├── lexeme.js
+    │   │   ├── literal.js
+    │   │   ├── module.js
+    │   │   ├── operator.js
+    │   │   ├── pat.js
+    │   │   ├── patsyn.js
+    │   │   ├── precedences.js
+    │   │   ├── th.js
+    │   │   ├── type.js
+    │   │   └── util.js
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── injections.scm
+    │   │   └── locals.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   ├── tree_sitter
+    │   │   │   ├── alloc.h
+    │   │   │   ├── array.h
+    │   │   │   └── parser.h
+    │   │   └── unicode.h
+    │   ├── test
+    │   │   └── corpus
+    │   │       ├── char.txt
+    │   │       ├── class.txt
+    │   │       ├── comment.txt
+    │   │       ├── consym.txt
+    │   │       ├── context.txt
+    │   │       ├── cpp.txt
+    │   │       ├── data.txt
+    │   │       ├── decl.txt
+    │   │       ├── default.txt
+    │   │       ├── exp.txt
+    │   │       ├── family.txt
+    │   │       ├── foreign.txt
+    │   │       ├── gadt.txt
+    │   │       ├── id.txt
+    │   │       ├── implicit.txt
+    │   │       ├── import.txt
+    │   │       ├── instance.txt
+    │   │       ├── layout.txt
+    │   │       ├── module.txt
+    │   │       ├── newtype.txt
+    │   │       ├── number.txt
+    │   │       ├── patsyn.txt
+    │   │       ├── pat.txt
+    │   │       ├── pragma.txt
+    │   │       ├── prec.txt
+    │   │       ├── signature.txt
+    │   │       ├── special.txt
+    │   │       ├── string.txt
+    │   │       ├── th.txt
+    │   │       ├── type.txt
+    │   │       └── varsym.txt
+    │   └── tree-sitter.json
+    ├── tree-sitter-html
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-html.h
+    │   │   │   └── tree-sitter-html.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_html
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterHTML
+    │   │       │   └── html.h
+    │   │       └── TreeSitterHTMLTests
+    │   │           └── TreeSitterHTMLTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── deeply-nested-custom.html
+    │   │   └── deeply-nested.html
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   └── injections.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   ├── tag.h
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   └── main.txt
+    │   │   └── highlight
+    │   │       ├── attributes.html
+    │   │       ├── doctype.html
+    │   │       ├── erroneous.html
+    │   │       └── self-closing.html
+    │   └── tree-sitter.json
+    ├── tree-sitter-java
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-java.h
+    │   │   │   └── tree-sitter-java.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_java
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterJava
+    │   │       │   └── java.h
+    │   │       └── TreeSitterJavaTests
+    │   │           └── TreeSitterJavaTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── comments.txt
+    │   │   │   ├── declarations.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── precedence.txt
+    │   │   │   └── types.txt
+    │   │   └── highlight
+    │   │       └── types.java
+    │   └── tree-sitter.json
+    ├── tree-sitter-javascript
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-javascript.h
+    │   │   │   └── tree-sitter-javascript.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_javascript
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterJavaScript
+    │   │       │   └── javascript.h
+    │   │       └── TreeSitterJavaScriptTests
+    │   │           └── TreeSitterJavaScriptTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── jquery.js
+    │   │   └── text-editor-component.js
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights-jsx.scm
+    │   │   ├── highlights-params.scm
+    │   │   ├── highlights.scm
+    │   │   ├── injections.scm
+    │   │   ├── locals.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── destructuring.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── injectables.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── semicolon_insertion.txt
+    │   │   │   └── statements.txt
+    │   │   ├── highlight
+    │   │   │   ├── functions.js
+    │   │   │   ├── imports.js
+    │   │   │   ├── injection.js
+    │   │   │   ├── keywords.js
+    │   │   │   └── variables.js
+    │   │   └── tags
+    │   │       ├── classes.js
+    │   │       └── functions.js
+    │   └── tree-sitter.json
+    ├── tree-sitter-json
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-json.h
+    │   │   │   └── tree-sitter-json.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_json
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterJSON
+    │   │       │   └── json.h
+    │   │       └── TreeSitterJSONTests
+    │   │           └── TreeSitterJSONTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   └── highlights.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   └── corpus
+    │   │       └── main.txt
+    │   └── tree-sitter.json
+    ├── tree-sitter-php
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree_sitter
+    │   │   │   │   ├── tree-sitter-php.h
+    │   │   │   │   └── tree-sitter-php_only.h
+    │   │   │   ├── tree-sitter-php_only.pc.in
+    │   │   │   └── tree-sitter-php.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding_php.go
+    │   │   │   ├── binding_php_only.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   ├── index.js
+    │   │   │   ├── php.js
+    │   │   │   └── php_only.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_php
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterPHP
+    │   │       │   └── php.h
+    │   │       └── TreeSitterPHPTests
+    │   │           └── TreeSitterPHPTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── common
+    │   │   ├── common.mak
+    │   │   ├── define-grammar.js
+    │   │   └── scanner.h
+    │   ├── eslint.config.mjs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── php
+    │   │   ├── CMakeLists.txt
+    │   │   ├── grammar.js
+    │   │   ├── Makefile
+    │   │   ├── package.json
+    │   │   └── src
+    │   │       ├── grammar.json
+    │   │       ├── node-types.json
+    │   │       ├── parser.c
+    │   │       ├── scanner.c
+    │   │       └── tree_sitter
+    │   │           ├── alloc.h
+    │   │           ├── array.h
+    │   │           └── parser.h
+    │   ├── php_only
+    │   │   ├── CMakeLists.txt
+    │   │   ├── grammar.js
+    │   │   ├── Makefile
+    │   │   ├── package.json
+    │   │   └── src
+    │   │       ├── grammar.json
+    │   │       ├── node-types.json
+    │   │       ├── parser.c
+    │   │       ├── scanner.c
+    │   │       └── tree_sitter
+    │   │           ├── alloc.h
+    │   │           ├── array.h
+    │   │           └── parser.h
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── injections.scm
+    │   │   ├── injections-text.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── bugs.txt
+    │   │   │   ├── class.txt
+    │   │   │   ├── declarations.txt
+    │   │   │   ├── errors.txt
+    │   │   │   ├── execution_operator.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── interpolation.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── nowdoc.txt
+    │   │   │   ├── php_only.txt
+    │   │   │   ├── statements.txt
+    │   │   │   ├── string.txt
+    │   │   │   └── types.txt
+    │   │   ├── highlight
+    │   │   │   ├── keywords.php
+    │   │   │   ├── literals.php
+    │   │   │   ├── namespaces.php
+    │   │   │   ├── types.php
+    │   │   │   └── variables.php
+    │   │   └── tags
+    │   │       ├── definition.php
+    │   │       └── reference.php
+    │   └── tree-sitter.json
+    ├── tree-sitter-ruby
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-ruby.h
+    │   │   │   └── tree-sitter-ruby.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_ruby
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterRuby
+    │   │       │   └── ruby.h
+    │   │       └── TreeSitterRubyTests
+    │   │           └── TreeSitterRubyTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── locals.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── comments.txt
+    │   │   │   ├── control-flow.txt
+    │   │   │   ├── declarations.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── line-endings.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── patterns.txt
+    │   │   │   ├── single-cr-as-whitespace.txt
+    │   │   │   └── statements.txt
+    │   │   └── highlight
+    │   │       ├── classes.rb
+    │   │       ├── constants.rb
+    │   │       ├── literals.rb
+    │   │       ├── patterns.rb
+    │   │       └── variables.rb
+    │   └── tree-sitter.json
+    ├── tree-sitter-rust
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-rust.h
+    │   │   │   └── tree-sitter-rust.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_rust
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterRust
+    │   │       │   └── rust.h
+    │   │       └── TreeSitterRustTests
+    │   │           └── TreeSitterRustTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── eslint.config.mjs
+    │   ├── examples
+    │   │   ├── ast.rs
+    │   │   └── weird-exprs.rs
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── injections.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   └── corpus
+    │   │       ├── async.txt
+    │   │       ├── declarations.txt
+    │   │       ├── expressions.txt
+    │   │       ├── literals.txt
+    │   │       ├── macros.txt
+    │   │       ├── patterns.txt
+    │   │       ├── source_files.txt
+    │   │       └── types.txt
+    │   └── tree-sitter.json
+    ├── tree-sitter-scala
+    │   ├── binding.gyp
+    │   ├── bindings
+    │   │   ├── c
+    │   │   │   ├── tree-sitter-scala.h
+    │   │   │   └── tree-sitter-scala.pc.in
+    │   │   ├── go
+    │   │   │   ├── binding.go
+    │   │   │   └── binding_test.go
+    │   │   ├── node
+    │   │   │   ├── binding.cc
+    │   │   │   ├── binding_test.js
+    │   │   │   ├── index.d.ts
+    │   │   │   └── index.js
+    │   │   ├── python
+    │   │   │   ├── tests
+    │   │   │   │   └── test_binding.py
+    │   │   │   └── tree_sitter_scala
+    │   │   │       ├── binding.c
+    │   │   │       ├── __init__.py
+    │   │   │       ├── __init__.pyi
+    │   │   │       └── py.typed
+    │   │   ├── rust
+    │   │   │   ├── build.rs
+    │   │   │   └── lib.rs
+    │   │   └── swift
+    │   │       ├── TreeSitterScala
+    │   │       │   └── scala.h
+    │   │       └── TreeSitterScalaTests
+    │   │           └── TreeSitterScalaTests.swift
+    │   ├── Cargo.lock
+    │   ├── Cargo.toml
+    │   ├── CMakeLists.txt
+    │   ├── CONTRIBUTING.md
+    │   ├── examples
+    │   │   ├── Packages.scala
+    │   │   ├── PathResolver.scala
+    │   │   ├── RefChecks.scala
+    │   │   ├── SyntaxAnalyer.scala
+    │   │   └── Variance.scala
+    │   ├── go.mod
+    │   ├── go.sum
+    │   ├── grammar.js
+    │   ├── LICENSE
+    │   ├── Makefile
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── Package.resolved
+    │   ├── Package.swift
+    │   ├── pyproject.toml
+    │   ├── queries
+    │   │   ├── highlights.scm
+    │   │   ├── indents.scm
+    │   │   ├── locals.scm
+    │   │   └── tags.scm
+    │   ├── README.md
+    │   ├── script
+    │   │   ├── parse-with-scalac
+    │   │   └── smoke_test.sh
+    │   ├── setup.py
+    │   ├── src
+    │   │   ├── grammar.json
+    │   │   ├── node-types.json
+    │   │   ├── parser.c
+    │   │   ├── scanner.c
+    │   │   └── tree_sitter
+    │   │       ├── alloc.h
+    │   │       ├── array.h
+    │   │       └── parser.h
+    │   ├── test
+    │   │   ├── corpus
+    │   │   │   ├── annotations.txt
+    │   │   │   ├── comments.txt
+    │   │   │   ├── definitions-pending.txt
+    │   │   │   ├── definitions.txt
+    │   │   │   ├── expressions-pending.txt
+    │   │   │   ├── expressions.txt
+    │   │   │   ├── literals.txt
+    │   │   │   ├── patterns-pending.txt
+    │   │   │   ├── patterns.txt
+    │   │   │   ├── types-pending.txt
+    │   │   │   └── types.txt
+    │   │   ├── highlight
+    │   │   │   ├── basics.scala
+    │   │   │   ├── comments.scala
+    │   │   │   └── scala3.scala
+    │   │   └── tags
+    │   │       └── basics.scala
+    │   └── tree-sitter.json
+    ├── tree-sitter-swift
+    │   ├── binding.gyp
+    │   ├── corpus
+    │   │   ├── classes.txt
+    │   │   ├── comments.txt
+    │   │   ├── declarations.txt
+    │   │   ├── keywords.txt
+    │   │   ├── literals.txt
+    │   │   ├── protocols.txt
+    │   │   ├── statements.txt
+    │   │   ├── structs.txt
+    │   │   └── types.txt
+    │   ├── grammar.js
+    │   ├── index.js
+    │   ├── package.json
+    │   ├── README.md
+    │   └── src
+    │       ├── binding.cc
+    │       ├── grammar.json
+    │       ├── node-types.json
+    │       ├── parser.c
+    │       └── tree_sitter
+    │           └── parser.h
+    └── tree-sitter-yaml
+        ├── binding.gyp
+        ├── bindings
+        │   └── node
+        │       ├── binding.cc
+        │       └── index.js
+        ├── CHANGELOG.md
+        ├── corpus
+        │   ├── schema.txt
+        │   └── spec.txt
+        ├── docs
+        │   ├── assets
+        │   │   ├── tree-sitter-playground-0.19.3
+        │   │   │   ├── LICENSE
+        │   │   │   ├── playground.js
+        │   │   │   └── style.css
+        │   │   ├── tree-sitter-yaml-0.5.0
+        │   │   │   └── tree-sitter-yaml.wasm
+        │   │   └── web-tree-sitter-0.19.3
+        │   │       ├── LICENSE
+        │   │       ├── tree-sitter.js
+        │   │       └── tree-sitter.wasm
+        │   └── index.html
+        ├── grammar.js
+        ├── grammar-schema.js
+        ├── LICENSE
+        ├── package.json
+        ├── README.md
+        ├── scripts
+        │   ├── generate-playground.js
+        │   ├── setup-tree-sitter.sh
+        │   ├── update-schema.js
+        │   ├── update-schema.sh
+        │   └── update-spec-corpus.js
+        ├── src
+        │   ├── grammar.json
+        │   ├── node-types.json
+        │   ├── parser.c
+        │   ├── scanner.cc
+        │   ├── schema.generated.cc
+        │   └── tree_sitter
+        │       └── parser.h
+        ├── tree-sitter
+        ├── yaml-test-suite
+        └── yarn.lock
+
+311 directories, 1018 files

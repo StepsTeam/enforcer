@@ -1,34 +1,53 @@
-use crate::state::Train;
-use crate::debug::watch::watch; // Import the watch function
-use crate::debug::wreck::wreck; // Import the wreck function
+use crate::state::{Train};
+use crate::debug::{watch};
+use serde_json::Value;
 
-/// Configures Tree-sitter related settings within the pipeline.
-pub fn configure_tree_sitter(mut train: Train) -> Train { // Corrected from Value to Train
-    // If a "wreck" condition exists, propagate it immediately.
+pub fn configure_tree_sitter(mut train: Train) -> Train {
     if !train.wreck.message.is_empty() {
-        return wreck(train); // Call wreck to process/log the wreck and return train
+        return train;
     }
 
-    // Log the entry into the configure_tree_sitter function.
-    train.watch.level = 3;
-    train.watch.message = "configure_tree_sitter:".to_string();
+    train.watch.level = 2;
+    train.watch.message = "configure_tree_sitter: start".to_string();
     train = watch(train);
 
-    // Ensure `train.tool` is properly configured.
-    // The `Train::new()` already initializes `train.tool` as a `Tool` struct,
-    // so explicit JSON object creation is no longer needed here.
-    // We can directly assign values to its fields.
+    let config_path = train
+        .tool
+        .params
+        .get("language_configurations_path")
+        .and_then(|v| v.as_str())
+        .unwrap_or("config/language_configurations.json");
 
-    train.tool.tool_name = "tree_sitter".to_string();
+    let config_str = match std::fs::read_to_string(config_path) {
+        Ok(s) => s,
+        Err(_) => {
+            train.warnings = Value::Array(vec![serde_json::json!({
+                "rule_name": "CONFIG_FILE_MISSING",
+                "artifact_url": config_path,
+                "message": format!("Could not read Tree-sitter configuration file: {}", config_path)
+            })]);
+            train.watch.message = "Failed to read Tree-sitter config, returning early".to_string();
+            return train;
+        }
+    };
 
-    train.tool.language_configurations_path = "config/language_configurations.json".to_string();
+    let config_json: Value = match serde_json::from_str(&config_str) {
+        Ok(v) => v,
+        Err(e) => {
+            train.warnings = Value::Array(vec![serde_json::json!({
+                "rule_name": "CONFIG_JSON_INVALID",
+                "artifact_url": config_path,
+                "message": format!("Failed to parse Tree-sitter configuration JSON: {}", e)
+            })]);
+            train.watch.message = "Invalid Tree-sitter JSON, returning early".to_string();
+            return train;
+        }
+    };
 
-    // Log the configured language configurations path.
-    train.watch.level = 5;
-    train.watch.message = format!(
-        "language_configurations_path = {}",
-        &train.tool.language_configurations_path
-    );
+    train.tool.params.insert("tree_sitter_config".to_string(), config_json);
+
+    train.watch.level = 4;
+    train.watch.message = "Tree-sitter configuration applied successfully".to_string();
     train = watch(train);
 
     train

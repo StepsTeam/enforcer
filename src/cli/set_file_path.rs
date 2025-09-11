@@ -1,5 +1,5 @@
-use crate::state::Train;
-use crate::debug::wreck::wreck; // Import the wreck function from its specific path
+use crate::state::{Train};
+use crate::debug::{configure_debug, watch, warn, wreck};
 use std::path::PathBuf;
 // Removed: use serde_json::Value; // No longer needed if train is consistently Train struct
 
